@@ -46,7 +46,6 @@ int main() {
     FILE* inputFile = fopen(FILE_NAME, "r");  // data file
     //------------------------------------
 
-    // while ((scanf("%d",&dataSize)) && dataSize != 0){
     while ((fscanf(inputFile, "%d", &dataSize)) && dataSize != 0) {
         // check input effectiveness, dataSize should >= 23 and combine with 6
         // data per char(except the last char)
@@ -100,8 +99,6 @@ int main() {
             caseNumber++;
             correct_char = 1;
         }
-
-        // fflush(stdin);
     }
 }
 
@@ -127,34 +124,6 @@ void swap_char(char* a, char* b) {
 char bits6_to_char(char* bin) {
     if (bin[5] == '0') {
         bin[5] = '\0';
-
-        /*UAa data
-        if (!strcmp(bin, "00001"))
-            return '0';
-        else if (!strcmp(bin, "10001"))
-            return '1';
-        else if (!strcmp(bin, "01001"))
-            return '2';
-        else if (!strcmp(bin, "11000"))
-            return '3';
-        else if (!strcmp(bin, "00101"))
-            return '4';
-        else if (!strcmp(bin, "10100"))
-            return '5';
-        else if (!strcmp(bin, "01100"))
-            return '6';
-        else if (!strcmp(bin, "00011"))
-            return '7';
-        else if (!strcmp(bin, "10010"))
-            return '8';
-        else if (!strcmp(bin, "10000"))
-            return '9';
-        else if (!strcmp(bin, "00100"))
-            return '-';
-        else if (!strcmp(bin, "00110"))
-            return 'B';
-        else return 'n';
-        */
         if (!strcmp(bin, "00011"))
             return '0';
         else if (!strcmp(bin, "01001"))
