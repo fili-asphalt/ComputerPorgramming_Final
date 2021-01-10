@@ -22,7 +22,6 @@ Process :
 #define BAD_C "bad C\n"
 #define BAD_K "bad K\n"
 #define BAD_CODE "bad code\n"
-#define FILE_NAME "testData.txt"
 //------------------------------------
 // custom function
 void reverse(char* bin);                                  // Done by ortter
@@ -43,9 +42,14 @@ int main() {
     char anser[30];        // store anser.
     int correct_char = 1;  // check every binary can be decode to char
     int caseNumber = 1;    // current case
-    FILE* inputFile = fopen(FILE_NAME, "r");  // data file
+    char fileName[200];    // file name
+    FILE* inputFile;       // data file
+
     //------------------------------------
 
+    printf("Enter file name :");
+    scanf("%s", fileName);
+    inputFile = fopen(fileName, "r");
     while ((fscanf(inputFile, "%d", &dataSize)) && dataSize != 0) {
         // check input effectiveness, dataSize should >= 23 and combine with 6
         // data per char(except the last char)
@@ -56,7 +60,6 @@ int main() {
             charSize = (dataSize + 1) / 6;
             for (int i = 0; i < dataSize; i++) {
                 fscanf(inputFile, "%d", data + i);
-                // scanf("%d",data+i);
             }
             if (data_to_bin(data, dataSize, binary)) {
                 if (*(binary + 1) == '1') {
