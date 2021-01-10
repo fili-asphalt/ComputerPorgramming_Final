@@ -50,57 +50,61 @@ int main() {
     printf("Enter file name :");
     scanf("%s", fileName);
     inputFile = fopen(fileName, "r");
-    while ((fscanf(inputFile, "%d", &dataSize)) && dataSize != 0) {
-        // check input effectiveness, dataSize should >= 23 and combine with 6
-        // data per char(except the last char)
-        if (dataSize < 23 || (dataSize + 1) % 6 != 0) {
-            printf("Case %d: ", caseNumber);
-            printf(BAD_CODE);
-        } else {
-            charSize = (dataSize + 1) / 6;
-            for (int i = 0; i < dataSize; i++) {
-                fscanf(inputFile, "%d", data + i);
-            }
-            if (data_to_bin(data, dataSize, binary)) {
-                if (*(binary + 1) == '1') {
-                    reverse(binary);
+    if (!inputFile) {
+        printf("Can\'t find it.");
+    } else {
+        while ((fscanf(inputFile, "%d", &dataSize)) && dataSize != 0) {
+            // check input effectiveness, dataSize should >= 23 and combine with
+            // 6 data per char(except the last char)
+            if (dataSize < 23 || (dataSize + 1) % 6 != 0) {
+                printf("Case %d: ", caseNumber);
+                printf(BAD_CODE);
+            } else {
+                charSize = (dataSize + 1) / 6;
+                for (int i = 0; i < dataSize; i++) {
+                    fscanf(inputFile, "%d", data + i);
                 }
-                // decode to char
-                binary[dataSize] = '0';
-                for (int i = 0; i < charSize; i++) {
-                    *(anser + i) = bits6_to_char(binary + (i * 6));
-                    // some one can't decode
-                    if (*(anser + i) == 'n') {
-                        correct_char = 0;
-                        break;
+                if (data_to_bin(data, dataSize, binary)) {
+                    if (*(binary + 1) == '1') {
+                        reverse(binary);
                     }
-                }
-                // check start and end
-                if (!(*(anser) == 'B' && *(anser + charSize - 1) == 'B')) {
-                    correct_char = 0;
-                }
+                    // decode to char
+                    binary[dataSize] = '0';
+                    for (int i = 0; i < charSize; i++) {
+                        *(anser + i) = bits6_to_char(binary + (i * 6));
+                        // some one can't decode
+                        if (*(anser + i) == 'n') {
+                            correct_char = 0;
+                            break;
+                        }
+                    }
+                    // check start and end
+                    if (!(*(anser) == 'B' && *(anser + charSize - 1) == 'B')) {
+                        correct_char = 0;
+                    }
 
-                if (correct_char) {
-                    // anser : "B...CKB", charSize : sizeof(anser)
-                    if (checkCandK(anser + 1, charSize - 2, anser)) {
-                        printf("Case %d: ", caseNumber);
-                        printf("%s", anser);
-                        printf("\n");
+                    if (correct_char) {
+                        // anser : "B...CKB", charSize : sizeof(anser)
+                        if (checkCandK(anser + 1, charSize - 2, anser)) {
+                            printf("Case %d: ", caseNumber);
+                            printf("%s", anser);
+                            printf("\n");
+                        } else {
+                            printf("Case %d: ", caseNumber);
+                            printf("%s", anser);
+                        }
                     } else {
                         printf("Case %d: ", caseNumber);
-                        printf("%s", anser);
+                        printf(BAD_CODE);
                     }
                 } else {
                     printf("Case %d: ", caseNumber);
                     printf(BAD_CODE);
                 }
-            } else {
-                printf("Case %d: ", caseNumber);
-                printf(BAD_CODE);
-            }
 
-            caseNumber++;
-            correct_char = 1;
+                caseNumber++;
+                correct_char = 1;
+            }
         }
     }
 }
